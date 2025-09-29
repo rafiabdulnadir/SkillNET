@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SkillCard from './SkillCard';
-import SkillFilter from './SkillFilter';
-import LoadingSpinner, { SkillCardSkeleton } from './LoadingSpinner';
+import SkillCard from './SkillCard.jsx';
+import SkillFilter from './SkillFilter.jsx';
+import LoadingSpinner, { SkillCardSkeleton } from './LoadingSpinner.jsx';
 
 const SkillsSection = ({
   skills,

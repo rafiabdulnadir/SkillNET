@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 const Dashboard = () => {
   const { user } = useAuth();

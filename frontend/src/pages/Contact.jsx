@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

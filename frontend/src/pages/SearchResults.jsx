@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
-import SkillCard from '../components/SkillCard';
-import SkillFilter from '../components/SkillFilter';
-import Pagination, { usePagination } from '../components/Pagination';
-import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
+import SearchBar from '../components/SearchBar.jsx';
+import SkillCard from '../components/SkillCard.jsx';
+import SkillFilter from '../components/SkillFilter.jsx';
+import Pagination, { usePagination } from '../components/Pagination.jsx';
+import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner.jsx';
 
 const SearchResults = () => {
   const location = useLocation();

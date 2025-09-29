@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../components/SearchBar.jsx';
 
 const NotFound = () => {
   const navigate = useNavigate();

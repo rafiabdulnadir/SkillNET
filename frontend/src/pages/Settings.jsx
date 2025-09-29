@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme, ThemeSelector } from '../contexts/ThemeContext';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Modal, { ConfirmModal, useModal } from '../components/Modal';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { useTheme, ThemeSelector } from '../contexts/ThemeContext.jsx';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
+import Modal, { ConfirmModal, useModal } from '../components/Modal.jsx';
 
 const Settings = () => {
   const { user, updateUser } = useAuth();

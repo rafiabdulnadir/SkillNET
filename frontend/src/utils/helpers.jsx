@@ -1,6 +1,6 @@
 // Utility functions and common operations for SkillSwap platform
 
-import { DATE_CONFIG, STORAGE_KEYS } from './constants';
+import { DATE_CONFIG, STORAGE_KEYS } from './constants.jsx';
 
 // Date and Time Utilities
 export const formatDate = (date, options = {}) => {

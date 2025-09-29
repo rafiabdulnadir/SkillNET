@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
-import SkillCard from '../components/SkillCard';
-import Pagination from '../components/Pagination';
-import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
+import SearchBar from '../components/SearchBar.jsx';
+import SkillCard from '../components/SkillCard.jsx';
+import Pagination from '../components/Pagination.jsx';
+import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner.jsx';
 
 const Explore = () => {
   const [trendingSkills, setTrendingSkills] = useState([]);

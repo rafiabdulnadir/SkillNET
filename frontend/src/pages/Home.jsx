@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import api from '../utils/api';
-import HeroSection from '../components/HeroSection';
-import SkillsSection from '../components/SkillsSection';
-import SuccessStories from '../components/SuccessStories';
-import LocationPicker from '../components/LocationPicker';
-import CTASection from '../components/CTASection';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import api from '../utils/api.jsx';
+import HeroSection from '../components/HeroSection.jsx';
+import SkillsSection from '../components/SkillsSection.jsx';
+import SuccessStories from '../components/SuccessStories.jsx';
+import LocationPicker from '../components/LocationPicker.jsx';
+import CTASection from '../components/CTASection.jsx';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();

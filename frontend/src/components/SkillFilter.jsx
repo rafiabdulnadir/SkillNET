@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
+import api from '../utils/api.jsx';
 
 const SkillFilter = ({ onFilterChange, currentFilters }) => {
   const [categories, setCategories] = useState([]);

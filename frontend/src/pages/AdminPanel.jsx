@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Pagination, { usePagination } from '../components/Pagination';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
+import Pagination, { usePagination } from '../components/Pagination.jsx';
 
 const AdminPanel = () => {
   const { user } = useAuth();
