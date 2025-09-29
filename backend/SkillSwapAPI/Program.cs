@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -108,4 +108,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-

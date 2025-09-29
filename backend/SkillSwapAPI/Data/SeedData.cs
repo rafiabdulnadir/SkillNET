@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SkillSwapAPI.Models;
-using System.Security.Cryptography;
-using System.Text;
+using BCrypt.Net;
 
 namespace SkillSwapAPI.Data
 {
@@ -204,7 +203,7 @@ namespace SkillSwapAPI.Data
                 new Skill
                 {
                     Title = "Azure Cloud Services",
-                    Description = "Deploy and manage applications on Microsoft Azure. Covers App Services, databases, and DevOps pipelines.",
+                    Description = "Deploy and manage applications on Microsoft Azure. Covers App Services, databases, storage, and more.",
                     Category = "Cloud Computing",
                     SkillLevel = "Intermediate",
                     AvailabilityType = "Online",
@@ -218,7 +217,7 @@ namespace SkillSwapAPI.Data
                 new Skill
                 {
                     Title = "SEO Optimization",
-                    Description = "Learn search engine optimization techniques to improve website visibility and organic traffic.",
+                    Description = "Learn how to optimize websites for search engines and improve organic traffic.",
                     Category = "Marketing",
                     SkillLevel = "Intermediate",
                     AvailabilityType = "Both",
@@ -279,7 +278,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[1].Id, // Bob to Alice
                     ReceiverId = users[0].Id,
                     IsRead = true,
-                    CreatedAt = DateTime.UtcNow.AddDays(-5)
+                    SentAt = DateTime.UtcNow.AddDays(-5)
                 },
                 new Message
                 {
@@ -287,7 +286,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[0].Id, // Alice to Bob
                     ReceiverId = users[1].Id,
                     IsRead = true,
-                    CreatedAt = DateTime.UtcNow.AddDays(-5).AddHours(2)
+                    SentAt = DateTime.UtcNow.AddDays(-5).AddHours(2)
                 },
                 new Message
                 {
@@ -295,7 +294,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[1].Id, // Bob to Alice
                     ReceiverId = users[0].Id,
                     IsRead = true,
-                    CreatedAt = DateTime.UtcNow.AddDays(-4)
+                    SentAt = DateTime.UtcNow.AddDays(-4)
                 },
                 new Message
                 {
@@ -303,7 +302,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[0].Id, // Alice to Bob
                     ReceiverId = users[1].Id,
                     IsRead = false,
-                    CreatedAt = DateTime.UtcNow.AddDays(-4).AddHours(1)
+                    SentAt = DateTime.UtcNow.AddDays(-4).AddHours(1)
                 },
                 new Message
                 {
@@ -311,7 +310,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[3].Id, // David to Carol
                     ReceiverId = users[2].Id,
                     IsRead = true,
-                    CreatedAt = DateTime.UtcNow.AddDays(-3)
+                    SentAt = DateTime.UtcNow.AddDays(-3)
                 },
                 new Message
                 {
@@ -319,7 +318,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[2].Id, // Carol to David
                     ReceiverId = users[3].Id,
                     IsRead = true,
-                    CreatedAt = DateTime.UtcNow.AddDays(-3).AddHours(3)
+                    SentAt = DateTime.UtcNow.AddDays(-3).AddHours(3)
                 },
                 new Message
                 {
@@ -327,7 +326,7 @@ namespace SkillSwapAPI.Data
                     SenderId = users[3].Id, // David to Carol
                     ReceiverId = users[2].Id,
                     IsRead = false,
-                    CreatedAt = DateTime.UtcNow.AddDays(-2)
+                    SentAt = DateTime.UtcNow.AddDays(-2)
                 }
             };
 
@@ -342,7 +341,7 @@ namespace SkillSwapAPI.Data
                     Score = 5,
                     Comment = "Alice is an excellent teacher! Her React course was comprehensive and easy to follow. Highly recommended!",
                     RatedById = users[1].Id, // Bob rating Alice
-                    RatedUserId = users[0].Id,
+                    UserId = users[0].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-10)
                 },
                 new Rating
@@ -350,7 +349,7 @@ namespace SkillSwapAPI.Data
                     Score = 4,
                     Comment = "Great Python course! Bob explains complex concepts very clearly. Would definitely take another course with him.",
                     RatedById = users[0].Id, // Alice rating Bob
-                    RatedUserId = users[1].Id,
+                    UserId = users[1].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-8)
                 },
                 new Rating
@@ -358,7 +357,7 @@ namespace SkillSwapAPI.Data
                     Score = 5,
                     Comment = "Carol's design insights are incredible. She helped me completely transform my app's user experience.",
                     RatedById = users[3].Id, // David rating Carol
-                    RatedUserId = users[2].Id,
+                    UserId = users[2].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-6)
                 },
                 new Rating
@@ -366,7 +365,7 @@ namespace SkillSwapAPI.Data
                     Score = 5,
                     Comment = "David's ASP.NET course was exactly what I needed. Professional, thorough, and practical.",
                     RatedById = users[2].Id, // Carol rating David
-                    RatedUserId = users[3].Id,
+                    UserId = users[3].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-4)
                 },
                 new Rating
@@ -374,7 +373,7 @@ namespace SkillSwapAPI.Data
                     Score = 4,
                     Comment = "Emma's SEO strategies really work! My website traffic increased by 200% after implementing her suggestions.",
                     RatedById = users[5].Id, // Frank rating Emma
-                    RatedUserId = users[4].Id,
+                    UserId = users[4].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-3)
                 },
                 new Rating
@@ -382,7 +381,7 @@ namespace SkillSwapAPI.Data
                     Score = 5,
                     Comment = "Frank's photography workshop was amazing! Learned so much about lighting and composition.",
                     RatedById = users[4].Id, // Emma rating Frank
-                    RatedUserId = users[5].Id,
+                    UserId = users[5].Id,
                     CreatedAt = DateTime.UtcNow.AddDays(-2)
                 }
             };
@@ -395,41 +394,49 @@ namespace SkillSwapAPI.Data
             {
                 new Transaction
                 {
+                    SkillId = skills[0].Id, // React.js Development
                     Amount = 50.00m,
                     Description = "React.js Development Course - 4 sessions",
-                    PayerId = users[1].Id, // Bob paying Alice
-                    ReceiverId = users[0].Id,
+                    ProviderId = users[0].Id, // Alice providing
+                    ReceiverId = users[1].Id, // Bob receiving
                     Status = "Completed",
                     CreatedAt = DateTime.UtcNow.AddDays(-12),
+                    UpdatedAt = DateTime.UtcNow.AddDays(-10),
                     CompletedAt = DateTime.UtcNow.AddDays(-10)
                 },
                 new Transaction
                 {
+                    SkillId = skills[2].Id, // Python for Data Science
                     Amount = 75.00m,
                     Description = "Python for Data Science - Intensive Workshop",
-                    PayerId = users[0].Id, // Alice paying Bob
-                    ReceiverId = users[1].Id,
+                    ProviderId = users[1].Id, // Bob providing
+                    ReceiverId = users[0].Id, // Alice receiving
                     Status = "Completed",
                     CreatedAt = DateTime.UtcNow.AddDays(-9),
+                    UpdatedAt = DateTime.UtcNow.AddDays(-8),
                     CompletedAt = DateTime.UtcNow.AddDays(-8)
                 },
                 new Transaction
                 {
+                    SkillId = skills[4].Id, // UI/UX Design Principles
                     Amount = 100.00m,
                     Description = "UI/UX Design Consultation - App Redesign",
-                    PayerId = users[3].Id, // David paying Carol
-                    ReceiverId = users[2].Id,
+                    ProviderId = users[2].Id, // Carol providing
+                    ReceiverId = users[3].Id, // David receiving
                     Status = "Pending",
-                    CreatedAt = DateTime.UtcNow.AddDays(-3)
+                    CreatedAt = DateTime.UtcNow.AddDays(-3),
+                    UpdatedAt = DateTime.UtcNow.AddDays(-3)
                 },
                 new Transaction
                 {
+                    SkillId = skills[8].Id, // SEO Optimization
                     Amount = 60.00m,
                     Description = "SEO Optimization Strategy Session",
-                    PayerId = users[5].Id, // Frank paying Emma
-                    ReceiverId = users[4].Id,
+                    ProviderId = users[4].Id, // Emma providing
+                    ReceiverId = users[5].Id, // Frank receiving
                     Status = "Completed",
                     CreatedAt = DateTime.UtcNow.AddDays(-5),
+                    UpdatedAt = DateTime.UtcNow.AddDays(-4),
                     CompletedAt = DateTime.UtcNow.AddDays(-4)
                 }
             };
@@ -440,12 +447,7 @@ namespace SkillSwapAPI.Data
 
         private static string HashPassword(string password)
         {
-            using (var sha256 = SHA256.Create())
-            {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
+            return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt());
         }
     }
 }
-

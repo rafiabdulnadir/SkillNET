@@ -28,7 +28,7 @@ namespace SkillSwapAPI.Data
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.PasswordHash).IsRequired();
                 entity.Property(e => e.Role).HasDefaultValue("User");
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
 
             // Skill entity configuration
@@ -40,8 +40,8 @@ namespace SkillSwapAPI.Data
                 entity.Property(e => e.Category).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.SkillLevel).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(s => s.User)
                       .WithMany(u => u.Skills)
@@ -56,7 +56,7 @@ namespace SkillSwapAPI.Data
                 entity.Property(e => e.Content).IsRequired().HasMaxLength(2000);
                 entity.Property(e => e.MessageType).HasDefaultValue("Text");
                 entity.Property(e => e.IsRead).HasDefaultValue(false);
-                entity.Property(e => e.SentAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.SentAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(m => m.Sender)
                       .WithMany(u => u.SentMessages)
@@ -75,7 +75,7 @@ namespace SkillSwapAPI.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Score).IsRequired();
                 entity.Property(e => e.Comment).HasMaxLength(1000);
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(r => r.User)
                       .WithMany(u => u.ReceivedRatings)
@@ -98,8 +98,8 @@ namespace SkillSwapAPI.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Status).HasDefaultValue("Pending");
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(t => t.Skill)
                       .WithMany(s => s.Transactions)
@@ -138,4 +138,3 @@ namespace SkillSwapAPI.Data
         }
     }
 }
-
