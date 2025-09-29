@@ -70,6 +70,57 @@
   --gradient-secondary: linear-gradient(135deg, #64748b 0%, #334155 100%);
   --gradient-success: linear-gradient(135deg, #10b981 0%, #047857 100%);
   --gradient-hero: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  
+  /* Layout Variables */
+  --navbar-height: 70px;
+  --navbar-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --z-sticky: 1000;
+  --z-dropdown: 1010;
+  --z-modal: 1020;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  
+  /* Border Radius */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-all: all 0.3s ease;
+  --transition-colors: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  --transition-transform: transform 0.3s ease;
+  --transition-opacity: opacity 0.3s ease;
+  
+  /* Button Variables */
+  --button-height-sm: 2rem;
+  --button-height-base: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-padding-x-sm: 0.75rem;
+  --button-padding-x-base: 1rem;
+  --button-padding-x-lg: 1.5rem;
+  --button-radius: 0.5rem;
+  
+  /* Card Variables */
+  --card-background: #ffffff;
+  --card-border: #e2e8f0;
+  --card-radius: 0.75rem;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Dark Theme */
@@ -141,6 +192,57 @@
   --gradient-secondary: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
   --gradient-success: linear-gradient(135deg, #34d399 0%, #10b981 100%);
   --gradient-hero: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  
+  /* Layout Variables */
+  --navbar-height: 70px;
+  --navbar-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --z-sticky: 1000;
+  --z-dropdown: 1010;
+  --z-modal: 1020;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  
+  /* Border Radius */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-all: all 0.3s ease;
+  --transition-colors: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  --transition-transform: transform 0.3s ease;
+  --transition-opacity: opacity 0.3s ease;
+  
+  /* Button Variables */
+  --button-height-sm: 2rem;
+  --button-height-base: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-padding-x-sm: 0.75rem;
+  --button-padding-x-base: 1rem;
+  --button-padding-x-lg: 1.5rem;
+  --button-radius: 0.5rem;
+  
+  /* Card Variables */
+  --card-background: #1e293b;
+  --card-border: #334155;
+  --card-radius: 0.75rem;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== THEME TRANSITION ANIMATIONS ===== */
@@ -163,21 +265,25 @@
 .theme-toggle {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md);
   color: var(--color-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-all);
   font-size: 0.9rem;
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-sm);
 }
 
 .theme-toggle:hover {
   background: var(--color-surface-hover);
   border-color: var(--color-border-hover);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .theme-toggle:focus {
@@ -186,13 +292,48 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.theme-toggle:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
 .theme-toggle-icon {
   font-size: 1.2rem;
   line-height: 1;
+  transition: var(--transition-transform);
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: scale(1.1);
 }
 
 .theme-toggle-label {
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Navbar theme toggle styling */
+.theme-toggle-nav {
+  padding: 0.5rem;
+  border-radius: var(--radius-full);
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  background: rgba(var(--color-surface), 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--color-border), 0.5);
+}
+
+.theme-toggle-nav:hover {
+  background: rgba(var(--color-surface-hover), 0.9);
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-nav .theme-toggle-label {
+  display: none;
+}
+
+.theme-toggle-nav .theme-toggle-icon {
+  font-size: 1.1rem;
 }
 
 /* Compact theme toggle for navbar */
@@ -346,6 +487,30 @@ body {
 .stat-card:hover {
   background: var(--color-card-hover);
   box-shadow: var(--shadow-md);
+  color: var(--color-text);
+  transform: translateY(-2px);
+  transition: var(--transition-all);
+}
+
+.card:hover *,
+.skill-card:hover *,
+.story-card:hover *,
+.stat-card:hover * {
+  color: inherit;
+}
+
+.card:hover .text-secondary,
+.skill-card:hover .text-secondary,
+.story-card:hover .text-secondary,
+.stat-card:hover .text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.card:hover .text-muted,
+.skill-card:hover .text-muted,
+.story-card:hover .text-muted,
+.stat-card:hover .text-muted {
+  color: var(--color-text-muted);
 }
 
 /* Forms */
