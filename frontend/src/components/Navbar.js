@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, demoLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +11,11 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     navigate('/');
+    setIsMenuOpen(false);
+  };
+
+  const handleDemoLogin = () => {
+    demoLogin();
     setIsMenuOpen(false);
   };
 
@@ -75,6 +80,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <button 
+                className="demo-login-btn"
+                onClick={handleDemoLogin}
+                title="Try SkillSwap with demo user - no signup required!"
+              >
+                🚀 Demo Login
+              </button>
               <Link 
                 to="/login" 
                 className={`nav-link ${isActive('/login') ? 'active' : ''}`}
@@ -104,4 +116,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -89,6 +89,30 @@ export const AuthProvider = ({ children }) => {
     delete api.defaults.headers.common['Authorization'];
   };
 
+  const demoLogin = () => {
+    const demoUser = {
+      id: 'demo-user-123',
+      name: 'Demo User',
+      email: 'demo@skillswap.com',
+      location: 'Demo City',
+      rating: 4.8,
+      completedSessions: 15,
+      skills: ['React', 'JavaScript', 'Node.js'],
+      avatar: null,
+      isOnline: true
+    };
+    
+    const demoToken = 'demo-token-' + Date.now();
+    
+    setToken(demoToken);
+    setUser(demoUser);
+    
+    localStorage.setItem('token', demoToken);
+    localStorage.setItem('user', JSON.stringify(demoUser));
+    
+    return { success: true, user: demoUser };
+  };
+
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -101,6 +125,7 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    demoLogin,
     updateUser,
     isAuthenticated: !!token && !!user
   };
@@ -111,4 +136,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
