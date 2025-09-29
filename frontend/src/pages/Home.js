@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
 import HeroSection from '../components/HeroSection';
+import CategoryGrid from '../components/CategoryGrid';
 import SkillsSection from '../components/SkillsSection';
 import SuccessStories from '../components/SuccessStories';
 import LocationPicker from '../components/LocationPicker';
@@ -253,7 +254,12 @@ const Home = () => {
           isAuthenticated={isAuthenticated}
           totalSkills={pagination.totalCount}
         />
+      </div>
 
+      {/* Category Grid Section */}
+      <CategoryGrid />
+
+      <div className="container">
         {/* Location Picker Section */}
         <div className="location-section">
           <div className="location-header">
