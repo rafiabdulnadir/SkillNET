@@ -1,1 +1,0 @@
-# Frontend Public Folder\n\nThis folder contains the public assets for the SkillSwap React application.\n\n## Files:\n- index.html - Main HTML template with loading screen\n- manifest.json - PWA manifest\n- robots.txt - SEO robots file
