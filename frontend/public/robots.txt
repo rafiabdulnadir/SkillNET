@@ -1,0 +1,20 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+# Allow all crawlers to access the site
+# This is a skill-sharing platform that benefits from being discoverable
+
+# Specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap location (when available)
+# Sitemap: https://yourskillswap.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
