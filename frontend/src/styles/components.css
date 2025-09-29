@@ -1,4 +1,104 @@
 /* ===== SKILL BADGE STYLES ===== */
+
+/* ========== NAVBAR ========== */
+.nav-link {
+  padding: 0.4rem 0.75rem;
+  font-weight: 500;
+  color: var(--tw-text-gray-700, #374151);
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dark .nav-link {
+  color: #e5e7eb; /* gray-200 */
+}
+
+.nav-link:hover {
+  color: #3b82f6; /* blue-500 */
+}
+
+.nav-link.active {
+  color: #2563eb; /* blue-600 */
+  font-weight: 600;
+}
+
+/* Mobile Nav Links */
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  color: #374151;
+}
+
+.dark .mobile-nav-link {
+  color: #e5e7eb;
+}
+
+.mobile-nav-link:hover {
+  background: rgba(59, 130, 246, 0.15); /* blue-500/20 */
+}
+
+.mobile-nav-link.active {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  color: inherit;
+}
+
+.dropdown-item:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+/* Hamburger lines */
+.hamburger-line {
+  width: 1.25rem;
+  height: 0.125rem;
+  border-radius: 2px;
+  background: #2563eb; /* blue-600 */
+  transition: all 0.3s ease-in-out;
+}
+
+.dark .hamburger-line {
+  background: #60a5fa; /* blue-400 */
+}
+
+/* Profile Avatar Fix */
+.profile-button .w-8,
+.profile-button .w-10 {
+  border-radius: 9999px; /* full circle */
+  overflow: hidden;
+  border: 2px solid #3b82f6; /* blue-500 */
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+.profile-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures no overflow */
+}
+
+/* Mobile Menu Divider */
+.mobile-menu-divider {
+  border-top: 1px solid rgba(59, 130, 246, 0.3);
+  margin: 0.5rem 0;
+}
+
 .skill-badge {
   display: inline-flex;
   align-items: center;
