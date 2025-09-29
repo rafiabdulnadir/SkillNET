@@ -30,9 +30,12 @@ orleans.codegen.cs
 *.sln.docstates
 
 # Sensitive configuration files
-appsettings.*.json
-!appsettings.json
-!appsettings.Development.json
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+!appsettings.template.json
+!appsettings.Development.template.json
 
 # Logs
 logs/
