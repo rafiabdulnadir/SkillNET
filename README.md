@@ -1,222 +1,335 @@
-# 🔄 SkillSwap - Community Skill Exchange Platform
+# 🔄 SkillSwap Platform
 
-A modern, full-stack web application that enables users to discover, share, and exchange skills within their community. Built with **ASP.NET Core** backend and **React.js** frontend.
+A modern, full-stack skill-sharing platform that connects people to learn and teach skills within their community. Built with ASP.NET Core and React.js.
 
-![SkillSwap Platform](https://via.placeholder.com/800x400/1e3a8a/ffffff?text=SkillSwap+Platform)
+![SkillSwap Platform](https://img.shields.io/badge/Platform-SkillSwap-blue?style=for-the-badge)
+![.NET](https://img.shields.io/badge/.NET-8.0-purple?style=for-the-badge)
+![React](https://img.shields.io/badge/React-18.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ## ✨ Features
 
-### 🎯 **Core Functionality**
-- **Skill Discovery**: Browse thousands of skills with advanced filtering
-- **User Profiles**: Comprehensive profiles with ratings and reviews
-- **Real-time Messaging**: Direct communication between users
-- **Rating System**: 5-star rating system with detailed reviews
-- **Location-based Search**: Find skills near your location
-- **Responsive Design**: Works seamlessly on all devices
-
 ### 🔐 **Authentication & Security**
-- JWT-based authentication
-- Role-based authorization (User/Admin)
+- JWT-based authentication system
 - Secure password hashing with BCrypt
+- Role-based authorization (User/Admin)
 - Protected routes and API endpoints
 
-### 📱 **User Experience**
-- Professional blue-black theme
-- Mobile-first responsive design
-- Advanced search and filtering
-- Real-time notifications
-- Intuitive navigation with hamburger menu
+### 🎯 **Core Functionality**
+- **Skill Discovery**: Advanced filtering and search capabilities
+- **User Profiles**: Comprehensive profile management with ratings
+- **Real-time Messaging**: Direct communication between users
+- **Rating System**: 5-star reviews and feedback system
+- **Location-based Discovery**: Find skills in your area
+- **Skill Management**: Create, edit, and manage your skills
 
-## 🛠️ Technology Stack
+### 🎨 **User Experience**
+- **Responsive Design**: Mobile-first approach with professional UI
+- **Modern Interface**: Clean blue-black theme with smooth animations
+- **Touch-friendly**: Optimized for mobile and tablet devices
+- **Loading States**: Skeleton loading and progress indicators
+- **Error Handling**: Comprehensive error boundaries and validation
 
-### **Backend (ASP.NET Core 6.0)**
-- **Framework**: ASP.NET Core Web API
-- **Database**: Entity Framework Core with SQL Server
-- **Authentication**: JWT Bearer tokens
-- **Email**: SMTP email service for notifications
-- **Architecture**: Clean Architecture with Repository pattern
-
-### **Frontend (React.js 18)**
-- **Framework**: React.js with functional components
-- **Routing**: React Router v6
-- **State Management**: Context API
-- **HTTP Client**: Axios
-- **Styling**: Custom CSS with CSS Variables
-- **Build Tool**: Create React App
+### 📊 **Data Management**
+- **Entity Framework Core**: Robust data layer with SQL Server
+- **Sample Data**: Pre-populated with realistic demo content
+- **Database Relationships**: Properly structured data models
+- **Automatic Seeding**: Development data for immediate testing
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- .NET 6.0 SDK
-- Node.js 16+ and npm
-- SQL Server (LocalDB for development)
-- Visual Studio 2022 or VS Code
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
+- [Node.js 18+](https://nodejs.org/)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server) or SQL Server LocalDB
 
-### Backend Setup
+### 1. Clone the Repository
+```bash
+git clone https://github.com/rafiabdulnadir/SkillNET.git
+cd SkillNET
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/skillswap.git
-   cd skillswap/backend/SkillSwapAPI
-   ```
+### 2. Backend Setup (ASP.NET Core)
+```bash
+cd backend/SkillSwapAPI
 
-2. **Install dependencies**
-   ```bash
-   dotnet restore
-   ```
+# Restore dependencies
+dotnet restore
 
-3. **Update connection string**
-   ```json
-   // appsettings.json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=SkillSwapDB;Trusted_Connection=true;MultipleActiveResultSets=true"
-     }
-   }
-   ```
+# Update database connection string in appsettings.json if needed
+# Default uses LocalDB: Server=(localdb)\\mssqllocaldb;Database=SkillSwapDB_Dev
 
-4. **Run database migrations**
-   ```bash
-   dotnet ef database update
-   ```
+# Run database migrations and seed data
+dotnet ef database update
 
-5. **Start the API**
-   ```bash
-   dotnet run
-   ```
-   API will be available at `https://localhost:7001`
+# Start the API server
+dotnet run
+```
 
-### Frontend Setup
+The API will be available at `https://localhost:5001` and `http://localhost:5000`
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd ../frontend
-   ```
+### 3. Frontend Setup (React.js)
+```bash
+cd frontend
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Create environment file**
-   ```bash
-   cp .env.example .env
-   ```
+# Create environment file (optional)
+cp .env.example .env
 
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-   App will be available at `http://localhost:3000`
+# Start the development server
+npm start
+```
 
-## 📊 Database Schema
+The frontend will be available at `http://localhost:3000`
 
-### Core Entities
-- **Users**: User profiles with authentication
-- **Skills**: Skill listings with categories and levels
-- **Messages**: Real-time messaging system
-- **Ratings**: 5-star rating and review system
-- **Transactions**: Skill exchange tracking
+### 4. Access the Application
+- **Frontend**: http://localhost:3000
+- **API**: http://localhost:5000
+- **Swagger Documentation**: http://localhost:5000/swagger (Development only)
 
-### Sample Data
-The application includes comprehensive seed data:
-- 6 sample users (including admin)
-- 10+ diverse skills across categories
-- Sample messages and conversations
-- Rating and review examples
+## 🧪 Demo Accounts
 
-## 🎨 Design System
+The application comes with pre-seeded demo accounts:
 
-### Color Palette
-- **Primary Blue**: `#1e3a8a` - Main brand color
-- **Secondary Black**: `#1e293b` - Text and accents
-- **Success Green**: `#10b981` - Success states
-- **Warning Orange**: `#f59e0b` - Warnings and ratings
-- **Error Red**: `#ef4444` - Error states
+| Email | Password | Role | Description |
+|-------|----------|------|-------------|
+| alice@example.com | password123 | User | React developer with high ratings |
+| bob@example.com | password123 | User | Data scientist and Python expert |
+| carol@example.com | password123 | User | UX/UI designer with excellent reviews |
+| david@example.com | password123 | User | .NET developer and Azure specialist |
+| emma@example.com | password123 | User | Digital marketing expert |
+| frank@example.com | password123 | User | Professional photographer |
 
-### Typography
-- **Headings**: System font stack with fallbacks
-- **Body**: Optimized for readability across devices
-- **Responsive**: Scales appropriately on all screen sizes
+## 📁 Project Structure
 
-## 🔧 API Endpoints
+```
+SkillNET/
+├── backend/SkillSwapAPI/           # ASP.NET Core API
+│   ├── Controllers/                # API endpoints
+│   │   ├── AuthController.cs       # Authentication
+│   │   ├── UsersController.cs      # User management
+│   │   ├── SkillsController.cs     # Skill operations
+│   │   ├── MessagesController.cs   # Messaging system
+│   │   └── RatingsController.cs    # Rating system
+│   ├── Data/                       # Data layer
+│   │   ├── ApplicationDbContext.cs # EF Core context
+│   │   └── SeedData.cs            # Sample data
+│   ├── Models/                     # Data models
+│   │   ├── User.cs                # User entity
+│   │   ├── Skill.cs               # Skill entity
+│   │   ├── Message.cs             # Message entity
+│   │   ├── Rating.cs              # Rating entity
+│   │   └── Transaction.cs         # Transaction entity
+│   ├── Services/                   # Business logic
+│   │   ├── AuthService.cs         # Authentication logic
+│   │   └── EmailService.cs        # Email notifications
+│   ├── Program.cs                 # Application startup
+│   └── appsettings.json           # Configuration
+├── frontend/                       # React.js application
+│   ├── public/                    # Static assets
+│   │   ├── index.html             # HTML template
+│   │   └── manifest.json          # PWA manifest
+│   ├── src/                       # Source code
+│   │   ├── components/            # Reusable components
+│   │   │   ├── Navbar.js          # Navigation
+│   │   │   ├── SkillCard.js       # Skill display
+│   │   │   ├── SkillFilter.js     # Advanced filtering
+│   │   │   ├── LoadingSpinner.js  # Loading states
+│   │   │   ├── ErrorBoundary.js   # Error handling
+│   │   │   └── ProtectedRoute.js  # Route protection
+│   │   ├── contexts/              # React contexts
+│   │   │   └── AuthContext.js     # Authentication state
+│   │   ├── pages/                 # Application pages
+│   │   │   ├── Home.js            # Skill browsing
+│   │   │   ├── Login.js           # User login
+│   │   │   ├── Register.js        # User registration
+│   │   │   ├── Profile.js         # User profile
+│   │   │   ├── AddSkill.js        # Skill creation
+│   │   │   ├── Messages.js        # Messaging interface
+│   │   │   └── Ratings.js         # Rating system
+│   │   ├── styles/                # Styling
+│   │   │   ├── App.css            # Main styles
+│   │   │   └── responsive.css     # Mobile optimization
+│   │   ├── utils/                 # Utilities
+│   │   │   └── api.js             # API client
+│   │   ├── App.js                 # Main component
+│   │   └── index.js               # React entry point
+│   ├── package.json               # Dependencies
+│   └── .env.example               # Environment template
+└── README.md                      # This file
+```
 
-### Authentication
+## 🛠️ Technology Stack
+
+### Backend
+- **Framework**: ASP.NET Core 8.0
+- **Database**: Entity Framework Core with SQL Server
+- **Authentication**: JWT Bearer tokens
+- **Documentation**: Swagger/OpenAPI
+- **Email**: SMTP integration
+- **Security**: BCrypt password hashing
+
+### Frontend
+- **Framework**: React 18 with Hooks
+- **Routing**: React Router v6
+- **Styling**: Custom CSS with CSS Variables
+- **HTTP Client**: Axios
+- **State Management**: React Context API
+- **Icons**: Unicode emojis and symbols
+
+### Development Tools
+- **API Testing**: Swagger UI
+- **Database**: SQL Server LocalDB
+- **Version Control**: Git
+- **Package Managers**: NuGet (.NET), npm (React)
+
+## 🔧 Configuration
+
+### Backend Configuration
+Edit `backend/SkillSwapAPI/appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Your SQL Server connection string"
+  },
+  "JwtSettings": {
+    "SecretKey": "Your JWT secret key (32+ characters)",
+    "Issuer": "SkillSwapAPI",
+    "Audience": "SkillSwapClient",
+    "ExpirationInMinutes": 1440
+  },
+  "EmailSettings": {
+    "SmtpServer": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SmtpUsername": "your-email@gmail.com",
+    "SmtpPassword": "your-app-password"
+  }
+}
+```
+
+### Frontend Configuration
+Create `frontend/.env` from `.env.example`:
+
+```env
+REACT_APP_API_BASE_URL=http://localhost:5000/api
+REACT_APP_APP_NAME=SkillSwap
+REACT_APP_ENVIRONMENT=development
+```
+
+## 📚 API Documentation
+
+### Authentication Endpoints
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
+- `POST /api/auth/refresh` - Refresh JWT token
 
-### Users
-- `GET /api/users/profile` - Get current user profile
+### User Management
+- `GET /api/users` - Get all users (with filtering)
 - `GET /api/users/{id}` - Get user by ID
-- `PUT /api/users/{id}` - Update user profile
+- `GET /api/users/profile` - Get current user profile
+- `PUT /api/users/profile` - Update user profile
 
-### Skills
-- `GET /api/skills` - Get skills with filtering
+### Skill Management
+- `GET /api/skills` - Get all skills (with filtering)
 - `GET /api/skills/{id}` - Get skill by ID
 - `POST /api/skills` - Create new skill
 - `PUT /api/skills/{id}` - Update skill
 - `DELETE /api/skills/{id}` - Delete skill
+- `GET /api/skills/categories` - Get skill categories
 
-### Messages
+### Messaging System
+- `GET /api/messages/conversations` - Get user conversations
+- `GET /api/messages/conversation/{userId}` - Get conversation with user
 - `POST /api/messages` - Send message
-- `GET /api/messages/{userId}` - Get conversation
-- `GET /api/messages/conversations` - Get all conversations
+- `PUT /api/messages/{id}/read` - Mark message as read
 
-### Ratings
+### Rating System
+- `GET /api/ratings/user/{userId}` - Get user ratings
 - `POST /api/ratings` - Create rating
-- `GET /api/ratings/{userId}` - Get user ratings
-- `GET /api/ratings/stats/{userId}` - Get rating statistics
-
-## 🧪 Testing
-
-### Demo Account
-Use these credentials to explore the platform:
-- **Email**: `alice@example.com`
-- **Password**: `password123`
-
-### Sample Users
-The seed data includes 5 additional users with various skills:
-- Bob Smith (Programming)
-- Carol Davis (Cooking)
-- David Wilson (Music)
-- Emma Brown (Fitness)
+- `PUT /api/ratings/{id}` - Update rating
+- `DELETE /api/ratings/{id}` - Delete rating
 
 ## 🚀 Deployment
 
 ### Backend Deployment
-1. Configure production connection string
-2. Update JWT settings for production
-3. Configure email service credentials
-4. Deploy to Azure App Service or similar
+1. **Publish the application**:
+   ```bash
+   dotnet publish -c Release -o ./publish
+   ```
+
+2. **Configure production settings** in `appsettings.Production.json`
+
+3. **Deploy to your hosting provider** (Azure, AWS, etc.)
 
 ### Frontend Deployment
-1. Update API URL in environment variables
-2. Build production bundle: `npm run build`
-3. Deploy to Netlify, Vercel, or similar
+1. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy the `build` folder** to your static hosting service
+
+### Database Setup
+1. **Update connection string** for production database
+2. **Run migrations**:
+   ```bash
+   dotnet ef database update --environment Production
+   ```
+
+## 🧪 Testing
+
+### Backend Testing
+```bash
+cd backend/SkillSwapAPI
+dotnet test
+```
+
+### Frontend Testing
+```bash
+cd frontend
+npm test
+```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🆘 Support
+
+- **Documentation**: Check this README and inline code comments
+- **Issues**: Create an issue on GitHub for bugs or feature requests
+- **Email**: Contact support@skillswap.com for general inquiries
+
+## 🎯 Roadmap
+
+- [ ] Real-time notifications
+- [ ] Video calling integration
+- [ ] Payment processing
+- [ ] Mobile app (React Native)
+- [ ] Advanced analytics dashboard
+- [ ] Multi-language support
+- [ ] Social media integration
+- [ ] Skill certification system
+
 ## 🙏 Acknowledgments
 
-- Icons from various emoji sets
+- Built with ❤️ using ASP.NET Core and React
+- Icons and emojis from Unicode standard
 - Inspiration from modern skill-sharing platforms
-- Community feedback and suggestions
-
-## 📞 Support
-
-For support, email support@skillswap.com or create an issue in this repository.
+- Community feedback and contributions
 
 ---
 
-**Built with ❤️ by the SkillSwap Team**
+**Happy Skill Sharing! 🚀**
 

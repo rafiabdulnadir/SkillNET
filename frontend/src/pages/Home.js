@@ -2,219 +2,364 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
+import SkillCard from '../components/SkillCard';
+import SkillFilter from '../components/SkillFilter';
+import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [levelFilter, setLevelFilter] = useState('');
-
-  const categories = [
-    'Programming', 'Design', 'Languages', 'Music', 'Cooking', 
-    'Fitness', 'Photography', 'Writing', 'Marketing', 'Other'
-  ];
-
-  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const [filters, setFilters] = useState({
+    search: '',
+    category: '',
+    skillLevel: '',
+    availabilityType: '',
+    location: ''
+  });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 12,
+    totalCount: 0,
+    totalPages: 0
+  });
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
-    fetchSkills();
-  }, []);
+    fetchSkills(true);
+  }, [filters]);
 
-  const fetchSkills = async () => {
+  const fetchSkills = async (resetPagination = false) => {
     try {
-      setLoading(true);
-      // For demo purposes, we'll use mock data since the backend might not be fully connected
+      if (resetPagination) {
+        setLoading(true);
+        setPagination(prev => ({ ...prev, page: 1 }));
+      } else {
+        setLoadingMore(true);
+      }
+
+      const params = new URLSearchParams();
+      
+      // Add filters to params
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.append(key, value);
+      });
+      
+      // Add pagination
+      params.append('page', resetPagination ? '1' : pagination.page.toString());
+      params.append('pageSize', pagination.pageSize.toString());
+
+      const response = await api.get(`/skills?${params.toString()}`);
+      
+      if (resetPagination) {
+        setSkills(response.data.skills || []);
+      } else {
+        setSkills(prev => [...prev, ...(response.data.skills || [])]);
+      }
+      
+      setPagination({
+        page: response.data.page || 1,
+        pageSize: response.data.pageSize || 12,
+        totalCount: response.data.totalCount || 0,
+        totalPages: response.data.totalPages || 0
+      });
+      
+    } catch (err) {
+      // Fallback to mock data if API fails
+      console.warn('API not available, using mock data:', err);
       const mockSkills = [
         {
           id: 1,
           title: 'React.js Development',
-          description: 'Learn modern React development with hooks, context, and best practices.',
-          category: 'Programming',
+          description: 'Learn modern React development with hooks, context, and best practices. Perfect for beginners to intermediate developers.',
+          category: 'Web Development',
           skillLevel: 'Intermediate',
-          user: { name: 'Alice Johnson', location: 'San Francisco, CA' },
+          availabilityType: 'Online',
+          user: { 
+            id: 1,
+            name: 'Alice Johnson', 
+            location: 'San Francisco, CA',
+            profileImageUrl: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.8,
+            totalRatings: 12
+          },
           createdAt: new Date().toISOString()
         },
         {
           id: 2,
-          title: 'Spanish Conversation',
-          description: 'Practice conversational Spanish with a native speaker.',
-          category: 'Languages',
-          skillLevel: 'Beginner',
-          user: { name: 'Carlos Rodriguez', location: 'Madrid, Spain' },
-          createdAt: new Date().toISOString()
+          title: 'Python for Data Science',
+          description: 'Comprehensive Python training for data analysis using pandas, numpy, and matplotlib. Includes real-world projects.',
+          category: 'Data Science',
+          skillLevel: 'Intermediate',
+          availabilityType: 'Online',
+          user: { 
+            id: 2,
+            name: 'Bob Smith', 
+            location: 'New York, NY',
+            profileImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.6,
+            totalRatings: 8
+          },
+          createdAt: new Date(Date.now() - 86400000).toISOString()
         },
         {
           id: 3,
-          title: 'Guitar Lessons',
-          description: 'Learn acoustic guitar from beginner to intermediate level.',
-          category: 'Music',
+          title: 'UI/UX Design Principles',
+          description: 'Learn fundamental design principles, user research methods, and how to create intuitive user interfaces.',
+          category: 'Design',
           skillLevel: 'Beginner',
-          user: { name: 'Emma Wilson', location: 'Nashville, TN' },
-          createdAt: new Date().toISOString()
+          availabilityType: 'Both',
+          user: { 
+            id: 3,
+            name: 'Carol Davis', 
+            location: 'Austin, TX',
+            profileImageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.9,
+            totalRatings: 15
+          },
+          createdAt: new Date(Date.now() - 172800000).toISOString()
         },
         {
           id: 4,
-          title: 'Digital Photography',
-          description: 'Master digital photography techniques and photo editing.',
-          category: 'Photography',
+          title: 'ASP.NET Core Development',
+          description: 'Build robust web APIs and applications using ASP.NET Core, Entity Framework, and best practices.',
+          category: 'Web Development',
           skillLevel: 'Advanced',
-          user: { name: 'David Chen', location: 'Los Angeles, CA' },
-          createdAt: new Date().toISOString()
+          availabilityType: 'In-Person',
+          user: { 
+            id: 4,
+            name: 'David Wilson', 
+            location: 'Seattle, WA',
+            profileImageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.7,
+            totalRatings: 10
+          },
+          createdAt: new Date(Date.now() - 259200000).toISOString()
         },
         {
           id: 5,
-          title: 'Italian Cooking',
-          description: 'Learn authentic Italian recipes and cooking techniques.',
-          category: 'Cooking',
+          title: 'Digital Marketing Strategy',
+          description: 'Learn search engine optimization techniques to improve website visibility and organic traffic.',
+          category: 'Marketing',
           skillLevel: 'Intermediate',
-          user: { name: 'Maria Rossi', location: 'Rome, Italy' },
-          createdAt: new Date().toISOString()
+          availabilityType: 'Both',
+          user: { 
+            id: 5,
+            name: 'Emma Brown', 
+            location: 'Boston, MA',
+            profileImageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.5,
+            totalRatings: 7
+          },
+          createdAt: new Date(Date.now() - 345600000).toISOString()
+        },
+        {
+          id: 6,
+          title: 'Portrait Photography',
+          description: 'Master the art of portrait photography including lighting, composition, and post-processing techniques.',
+          category: 'Photography',
+          skillLevel: 'Intermediate',
+          availabilityType: 'In-Person',
+          user: { 
+            id: 6,
+            name: 'Frank Miller', 
+            location: 'Chicago, IL',
+            profileImageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+            averageRating: 4.4,
+            totalRatings: 6
+          },
+          createdAt: new Date(Date.now() - 432000000).toISOString()
         }
       ];
 
-      setSkills(mockSkills);
+      // Apply filters to mock data
+      let filteredMockSkills = mockSkills;
+      
+      if (filters.search) {
+        filteredMockSkills = filteredMockSkills.filter(skill =>
+          skill.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+          skill.description.toLowerCase().includes(filters.search.toLowerCase()) ||
+          skill.user.name.toLowerCase().includes(filters.search.toLowerCase())
+        );
+      }
+      
+      if (filters.category) {
+        filteredMockSkills = filteredMockSkills.filter(skill => skill.category === filters.category);
+      }
+      
+      if (filters.skillLevel) {
+        filteredMockSkills = filteredMockSkills.filter(skill => skill.skillLevel === filters.skillLevel);
+      }
+      
+      if (filters.availabilityType) {
+        filteredMockSkills = filteredMockSkills.filter(skill => skill.availabilityType === filters.availabilityType);
+      }
+      
+      if (filters.location) {
+        filteredMockSkills = filteredMockSkills.filter(skill =>
+          skill.user.location.toLowerCase().includes(filters.location.toLowerCase())
+        );
+      }
+
+      setSkills(filteredMockSkills);
+      setPagination({
+        page: 1,
+        pageSize: 12,
+        totalCount: filteredMockSkills.length,
+        totalPages: Math.ceil(filteredMockSkills.length / 12)
+      });
       setError('');
-    } catch (error) {
-      console.error('Error fetching skills:', error);
-      setError('Failed to load skills. Please try again later.');
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
   };
 
-  const filteredSkills = skills.filter(skill => {
-    const matchesSearch = skill.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         skill.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !categoryFilter || skill.category === categoryFilter;
-    const matchesLevel = !levelFilter || skill.skillLevel === levelFilter;
-    
-    return matchesSearch && matchesCategory && matchesLevel;
-  });
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString();
+  const loadMoreSkills = () => {
+    if (pagination.page < pagination.totalPages && !loadingMore) {
+      setPagination(prev => ({ ...prev, page: prev.page + 1 }));
+      fetchSkills(false);
+    }
   };
 
   if (loading) {
     return (
-      <div className="loading-spinner">
-        <div className="spinner"></div>
+      <div className="container">
+        <div className="page-header">
+          <h1 className="page-title">Discover Skills</h1>
+          <p className="page-subtitle">Connect with your community to learn and share skills</p>
+        </div>
+        
+        <div className="skills-grid">
+          {Array.from({ length: 6 }, (_, i) => (
+            <SkillCardSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="container">
-      <div className="page-header">
-        <h1 className="page-title">Discover Skills</h1>
-        <p className="page-subtitle">
-          Connect with talented people in your community and learn something new
-        </p>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="search-filters">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search skills..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            Learn. Share. <span className="highlight">Grow.</span>
+          </h1>
+          <p className="hero-subtitle">
+            Connect with your community to exchange skills and knowledge. 
+            Find experts to learn from or share your expertise with others.
+          </p>
+          
+          {!isAuthenticated && (
+            <div className="hero-actions">
+              <Link to="/register" className="btn btn-primary btn-large">
+                Get Started
+              </Link>
+              <Link to="/login" className="btn btn-outline btn-large">
+                Sign In
+              </Link>
+            </div>
+          )}
+          
+          {isAuthenticated && (
+            <div className="hero-actions">
+              <Link to="/add-skill" className="btn btn-primary btn-large">
+                Share a Skill
+              </Link>
+            </div>
+          )}
         </div>
         
-        <div className="filters">
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="filter-select"
-          >
-            <option value="">All Categories</option>
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-          
-          <select
-            value={levelFilter}
-            onChange={(e) => setLevelFilter(e.target.value)}
-            className="filter-select"
-          >
-            <option value="">All Levels</option>
-            {levels.map(level => (
-              <option key={level} value={level}>{level}</option>
-            ))}
-          </select>
+        <div className="hero-stats">
+          <div className="stat">
+            <div className="stat-number">{pagination.totalCount}+</div>
+            <div className="stat-label">Skills Available</div>
+          </div>
+          <div className="stat">
+            <div className="stat-number">6+</div>
+            <div className="stat-label">Expert Teachers</div>
+          </div>
+          <div className="stat">
+            <div className="stat-number">10+</div>
+            <div className="stat-label">Categories</div>
+          </div>
         </div>
       </div>
 
+      {/* Filter Section */}
+      <SkillFilter 
+        onFilterChange={handleFilterChange}
+        currentFilters={filters}
+      />
+
+      {/* Error Message */}
       {error && (
         <div className="error-message">
+          <span className="error-icon">⚠️</span>
           {error}
         </div>
       )}
 
       {/* Skills Grid */}
-      <div className="skills-grid">
-        {filteredSkills.length === 0 ? (
+      <div className="skills-section">
+        <div className="section-header">
+          <h2 className="section-title">
+            {filters.search || filters.category || filters.skillLevel || filters.availabilityType || filters.location
+              ? 'Filtered Skills'
+              : 'Available Skills'
+            }
+          </h2>
+          <div className="results-count">
+            {pagination.totalCount} skill{pagination.totalCount !== 1 ? 's' : ''} found
+          </div>
+        </div>
+
+        {skills.length === 0 ? (
           <div className="no-skills">
+            <div className="no-skills-icon">🔍</div>
             <h3>No skills found</h3>
-            <p>Try adjusting your search criteria or check back later for new skills.</p>
+            <p>Try adjusting your filters or search terms to find more skills.</p>
             {isAuthenticated && (
-              <Link to="/add-skill" className="btn-primary">
-                Add Your First Skill
+              <Link to="/add-skill" className="btn btn-primary">
+                Be the first to share this skill!
               </Link>
             )}
           </div>
         ) : (
-          filteredSkills.map(skill => (
-            <div key={skill.id} className="skill-card">
-              <div className="skill-header">
-                <h3 className="skill-title">{skill.title}</h3>
-                <div className="skill-badges">
-                  <span className="category-badge">{skill.category}</span>
-                  <span className="level-badge">{skill.skillLevel}</span>
-                </div>
-              </div>
-              
-              <div className="skill-body">
-                <p className="skill-description">{skill.description}</p>
-                
-                <div className="skill-meta">
-                  <div className="skill-user">
-                    <strong>{skill.user.name}</strong>
-                    <span className="user-location">{skill.user.location}</span>
-                  </div>
-                  <div className="skill-date">
-                    Added {formatDate(skill.createdAt)}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="skill-footer">
-                {isAuthenticated ? (
-                  <div className="skill-actions">
-                    <button className="btn-primary btn-sm">
-                      Contact Teacher
-                    </button>
-                    <button className="btn-secondary btn-sm">
-                      View Profile
-                    </button>
-                  </div>
-                ) : (
-                  <div className="skill-actions">
-                    <Link to="/login" className="btn-primary btn-sm">
-                      Login to Contact
-                    </Link>
-                  </div>
-                )}
-              </div>
+          <>
+            <div className="skills-grid">
+              {skills.map((skill) => (
+                <SkillCard key={skill.id} skill={skill} />
+              ))}
             </div>
-          ))
+
+            {/* Load More Button */}
+            {pagination.page < pagination.totalPages && (
+              <div className="load-more-section">
+                <button 
+                  className="btn btn-outline load-more-btn"
+                  onClick={loadMoreSkills}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? (
+                    <>
+                      <LoadingSpinner size="small" color="primary" />
+                      Loading more...
+                    </>
+                  ) : (
+                    `Load More Skills (${pagination.totalCount - skills.length} remaining)`
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -222,13 +367,13 @@ const Home = () => {
       {!isAuthenticated && (
         <div className="cta-section">
           <div className="cta-content">
-            <h2>Ready to Start Learning?</h2>
-            <p>Join our community to connect with skilled teachers and start your learning journey.</p>
-            <div className="cta-buttons">
-              <Link to="/register" className="btn-primary btn-lg">
-                Get Started
+            <h2>Ready to start learning?</h2>
+            <p>Join our community of skill sharers and start your learning journey today.</p>
+            <div className="cta-actions">
+              <Link to="/register" className="btn btn-primary">
+                Create Account
               </Link>
-              <Link to="/login" className="btn-secondary btn-lg">
+              <Link to="/login" className="btn btn-outline">
                 Sign In
               </Link>
             </div>
