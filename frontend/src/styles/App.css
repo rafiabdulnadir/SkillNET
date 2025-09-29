@@ -299,6 +299,25 @@ body {
   border-radius: 25px;
 }
 
+.demo-login-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.demo-login-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
 .register-link:hover {
   background-color: var(--success-green);
   transform: translateY(-2px);
