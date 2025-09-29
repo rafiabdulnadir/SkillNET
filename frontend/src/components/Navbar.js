@@ -3,6 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme, ThemeToggle } from "../contexts/ThemeContext";
+import "../styles/component.css";
+
+
 import {
   navSlide,
   mobileMenuSlide,
