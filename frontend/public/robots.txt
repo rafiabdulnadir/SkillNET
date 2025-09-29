@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+# Allow all crawlers to access the site
+# This is a skill-sharing platform that benefits from being discoverable
+
+# Sitemap location (when available)
+# Sitemap: https://yourskillswap.com/sitemap.xml
+
