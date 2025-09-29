@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
-import SkillCard from '../components/SkillCard';
-import SkillFilter from '../components/SkillFilter';
-import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
+import HeroSection from '../components/HeroSection';
+import CategoryGrid from '../components/CategoryGrid';
+import SkillsSection from '../components/SkillsSection';
+import SuccessStories from '../components/SuccessStories';
+import LocationPicker from '../components/LocationPicker';
+import CTASection from '../components/CTASection';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
@@ -25,6 +27,8 @@ const Home = () => {
     totalPages: 0
   });
   const [loadingMore, setLoadingMore] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [showLocationPicker, setShowLocationPicker] = useState(false);
 
   useEffect(() => {
     fetchSkills(true);
@@ -220,6 +224,21 @@ const Home = () => {
     setFilters(newFilters);
   };
 
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
+    if (location) {
+      setFilters(prev => ({
+        ...prev,
+        location: location.address || `${location.lat},${location.lng}`
+      }));
+    } else {
+      setFilters(prev => ({
+        ...prev,
+        location: ''
+      }));
+    }
+  };
+
   const loadMoreSkills = () => {
     if (pagination.page < pagination.totalPages && !loadingMore) {
       setPagination(prev => ({ ...prev, page: prev.page + 1 }));
@@ -227,162 +246,77 @@ const Home = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">Discover Skills</h1>
-          <p className="page-subtitle">Connect with your community to learn and share skills</p>
-        </div>
-        
-        <div className="skills-grid">
-          {Array.from({ length: 6 }, (_, i) => (
-            <SkillCardSkeleton key={i} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="container">
-      {/* Hero Section */}
-      <div className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Learn. Share. <span className="highlight">Grow.</span>
-          </h1>
-          <p className="hero-subtitle">
-            Connect with your community to exchange skills and knowledge. 
-            Find experts to learn from or share your expertise with others.
-          </p>
-          
-          {!isAuthenticated && (
-            <div className="hero-actions">
-              <Link to="/register" className="btn btn-primary btn-large">
-                Get Started
-              </Link>
-              <Link to="/login" className="btn btn-outline btn-large">
-                Sign In
-              </Link>
-            </div>
-          )}
-          
-          {isAuthenticated && (
-            <div className="hero-actions">
-              <Link to="/add-skill" className="btn btn-primary btn-large">
-                Share a Skill
-              </Link>
-            </div>
-          )}
-        </div>
-        
-        <div className="hero-stats">
-          <div className="stat">
-            <div className="stat-number">{pagination.totalCount}+</div>
-            <div className="stat-label">Skills Available</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">6+</div>
-            <div className="stat-label">Expert Teachers</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">10+</div>
-            <div className="stat-label">Categories</div>
-          </div>
-        </div>
+    <div className="home-page">
+      <div className="container">
+        {/* Hero Section */}
+        <HeroSection 
+          isAuthenticated={isAuthenticated}
+          totalSkills={pagination.totalCount}
+        />
       </div>
 
-      {/* Filter Section */}
-      <SkillFilter 
-        onFilterChange={handleFilterChange}
-        currentFilters={filters}
-      />
+      {/* Category Grid Section */}
+      <CategoryGrid />
 
-      {/* Error Message */}
-      {error && (
-        <div className="error-message">
-          <span className="error-icon">⚠️</span>
-          {error}
-        </div>
-      )}
-
-      {/* Skills Grid */}
-      <div className="skills-section">
-        <div className="section-header">
-          <h2 className="section-title">
-            {filters.search || filters.category || filters.skillLevel || filters.availabilityType || filters.location
-              ? 'Filtered Skills'
-              : 'Available Skills'
-            }
-          </h2>
-          <div className="results-count">
-            {pagination.totalCount} skill{pagination.totalCount !== 1 ? 's' : ''} found
-          </div>
-        </div>
-
-        {skills.length === 0 ? (
-          <div className="no-skills">
-            <div className="no-skills-icon">🔍</div>
-            <h3>No skills found</h3>
-            <p>Try adjusting your filters or search terms to find more skills.</p>
-            {isAuthenticated && (
-              <Link to="/add-skill" className="btn btn-primary">
-                Be the first to share this skill!
-              </Link>
-            )}
-          </div>
-        ) : (
-          <>
-            <div className="skills-grid">
-              {skills.map((skill) => (
-                <SkillCard key={skill.id} skill={skill} />
-              ))}
-            </div>
-
-            {/* Load More Button */}
-            {pagination.page < pagination.totalPages && (
-              <div className="load-more-section">
-                <button 
-                  className="btn btn-outline load-more-btn"
-                  onClick={loadMoreSkills}
-                  disabled={loadingMore}
+      <div className="container">
+        {/* Location Picker Section */}
+        <div className="location-section">
+          <div className="location-header">
+            <button
+              className="btn btn-outline location-toggle"
+              onClick={() => setShowLocationPicker(!showLocationPicker)}
+            >
+              {showLocationPicker ? '📍 Hide Location Picker' : '📍 Find Skills Near You'}
+            </button>
+            {selectedLocation && (
+              <div className="current-location">
+                <span className="location-icon">📍</span>
+                <span className="location-text">
+                  Showing skills near: {selectedLocation.address}
+                </span>
+                <button
+                  className="btn btn-small btn-outline"
+                  onClick={() => handleLocationChange(null)}
                 >
-                  {loadingMore ? (
-                    <>
-                      <LoadingSpinner size="small" color="primary" />
-                      Loading more...
-                    </>
-                  ) : (
-                    `Load More Skills (${pagination.totalCount - skills.length} remaining)`
-                  )}
+                  Clear
                 </button>
               </div>
             )}
-          </>
-        )}
+          </div>
+          
+          {showLocationPicker && (
+            <LocationPicker
+              onLocationChange={handleLocationChange}
+              initialLocation={selectedLocation}
+              className="home-location-picker"
+            />
+          )}
+        </div>
+
+        {/* Skills Section */}
+        <SkillsSection
+          skills={skills}
+          filters={filters}
+          pagination={pagination}
+          loading={loading}
+          loadingMore={loadingMore}
+          error={error}
+          isAuthenticated={isAuthenticated}
+          onFilterChange={handleFilterChange}
+          onLoadMore={loadMoreSkills}
+        />
       </div>
 
-      {/* Call to Action */}
-      {!isAuthenticated && (
-        <div className="cta-section">
-          <div className="cta-content">
-            <h2>Ready to start learning?</h2>
-            <p>Join our community of skill sharers and start your learning journey today.</p>
-            <div className="cta-actions">
-              <Link to="/register" className="btn btn-primary">
-                Create Account
-              </Link>
-              <Link to="/login" className="btn btn-outline">
-                Sign In
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Success Stories Section */}
+      <SuccessStories />
+
+      {/* Call to Action Section */}
+      <div className="container">
+        <CTASection isAuthenticated={isAuthenticated} />
+      </div>
     </div>
   );
 };
 
 export default Home;
-
