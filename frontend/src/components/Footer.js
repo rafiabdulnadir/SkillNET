@@ -55,18 +55,18 @@ const Footer = () => {
               share your expertise, we make skill exchange easy and rewarding.
             </p>
             <div className="footer-social">
-              <a href="#" className="social-link" aria-label="Facebook">
+              <button className="social-link" aria-label="Facebook" onClick={() => window.open('https://facebook.com', '_blank')}>
                 <span>📘</span>
-              </a>
-              <a href="#" className="social-link" aria-label="Twitter">
+              </button>
+              <button className="social-link" aria-label="Twitter" onClick={() => window.open('https://twitter.com', '_blank')}>
                 <span>🐦</span>
-              </a>
-              <a href="#" className="social-link" aria-label="LinkedIn">
+              </button>
+              <button className="social-link" aria-label="LinkedIn" onClick={() => window.open('https://linkedin.com', '_blank')}>
                 <span>💼</span>
-              </a>
-              <a href="#" className="social-link" aria-label="Instagram">
+              </button>
+              <button className="social-link" aria-label="Instagram" onClick={() => window.open('https://instagram.com', '_blank')}>
                 <span>📷</span>
-              </a>
+              </button>
             </div>
           </div>
 

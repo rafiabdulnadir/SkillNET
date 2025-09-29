@@ -3,27 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination, { usePagination } from '../components/Pagination';
 
-const Notifications = () => {
-  const { user } = useAuth();
-  const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('all');
-  const [markingAsRead, setMarkingAsRead] = useState(new Set());
-
-  // Pagination
-  const {
-    currentPage,
-    totalPages,
-    goToPage,
-    pageSize
-  } = usePagination({
-    totalItems: notifications.length,
-    itemsPerPage: 20,
-    initialPage: 1
-  });
-
-  // Mock notifications data
+// Mock notifications data
   const mockNotifications = [
     {
       id: 1,
@@ -92,6 +72,26 @@ const Notifications = () => {
       metadata: { sessionTime: new Date(Date.now() + 60 * 60 * 1000), student: 'Sarah Chen', skill: 'React Development' }
     }
   ];
+
+const Notifications = () => {
+  const { user } = useAuth();
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState('all');
+  const [markingAsRead, setMarkingAsRead] = useState(new Set());
+
+  // Pagination
+  const {
+    currentPage,
+    totalPages,
+    goToPage,
+    pageSize
+  } = usePagination({
+    totalItems: notifications.length,
+    itemsPerPage: 20,
+    initialPage: 1
+  });
 
   // Load notifications
   useEffect(() => {
