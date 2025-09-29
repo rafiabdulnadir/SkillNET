@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import "../styles/component.css";
 
 const Footer = () => {
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
