@@ -122,7 +122,7 @@ export const useTheme = () => {
 
 // Theme toggle button component
 export const ThemeToggle = ({ className = '', showLabel = true }) => {
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
 
   return (
     <button

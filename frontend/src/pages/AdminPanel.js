@@ -3,6 +3,38 @@ import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination, { usePagination } from '../components/Pagination';
 
+// Mock admin data - moved outside component to prevent recreation
+const mockStats = {
+  totalUsers: 5247,
+  activeUsers: 3891,
+  totalSkills: 12456,
+  totalSessions: 8934,
+  reportsCount: 23,
+  revenue: 45678.90
+};
+
+const mockUsers = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active', joinDate: '2024-01-15', skillsCount: 5 },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active', joinDate: '2024-02-20', skillsCount: 8 },
+  { id: 3, name: 'Mike Johnson', email: 'mike@example.com', status: 'suspended', joinDate: '2024-01-10', skillsCount: 3 },
+  { id: 4, name: 'Sarah Wilson', email: 'sarah@example.com', status: 'active', joinDate: '2024-03-05', skillsCount: 12 },
+  { id: 5, name: 'Tom Brown', email: 'tom@example.com', status: 'inactive', joinDate: '2024-01-25', skillsCount: 2 }
+];
+
+const mockSkills = [
+  { id: 1, title: 'React Development', teacher: 'John Doe', category: 'Web Development', status: 'approved', reports: 0 },
+  { id: 2, title: 'Python Programming', teacher: 'Jane Smith', category: 'Programming', status: 'pending', reports: 1 },
+  { id: 3, title: 'UI/UX Design', teacher: 'Mike Johnson', category: 'Design', status: 'approved', reports: 0 },
+  { id: 4, title: 'Digital Marketing', teacher: 'Sarah Wilson', category: 'Marketing', status: 'rejected', reports: 2 },
+  { id: 5, name: 'Data Science', teacher: 'Tom Brown', category: 'Analytics', status: 'approved', reports: 0 }
+];
+
+const mockReports = [
+  { id: 1, type: 'skill', targetId: 2, reporter: 'User123', reason: 'Inappropriate content', status: 'pending', date: '2024-03-15' },
+  { id: 2, type: 'user', targetId: 3, reporter: 'User456', reason: 'Spam behavior', status: 'resolved', date: '2024-03-14' },
+  { id: 3, type: 'skill', targetId: 4, reporter: 'User789', reason: 'Misleading information', status: 'pending', date: '2024-03-13' }
+];
+
 const AdminPanel = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -21,91 +53,6 @@ const AdminPanel = () => {
     itemsPerPage: 10,
     initialPage: 1
   });
-
-  // Mock admin data
-  const mockStats = {
-    totalUsers: 5247,
-    activeUsers: 3891,
-    totalSkills: 12456,
-    totalSessions: 8934,
-    reportsCount: 23,
-    revenue: 45678.90
-  };
-
-  const mockUsers = [
-    {
-      id: 1,
-      name: 'Sarah Chen',
-      email: 'sarah@example.com',
-      joinDate: '2023-10-15',
-      status: 'active',
-      skillsCount: 3,
-      sessionsCount: 12,
-      rating: 4.8
-    },
-    {
-      id: 2,
-      name: 'Marcus Johnson',
-      email: 'marcus@example.com',
-      joinDate: '2023-11-02',
-      status: 'active',
-      skillsCount: 2,
-      sessionsCount: 8,
-      rating: 4.6
-    },
-    {
-      id: 3,
-      name: 'Emily Rodriguez',
-      email: 'emily@example.com',
-      joinDate: '2023-09-20',
-      status: 'suspended',
-      skillsCount: 1,
-      sessionsCount: 3,
-      rating: 3.2
-    }
-  ];
-
-  const mockSkills = [
-    {
-      id: 1,
-      title: 'React Development',
-      teacher: 'Sarah Chen',
-      category: 'Web Development',
-      status: 'approved',
-      createdDate: '2023-11-01',
-      studentsCount: 15
-    },
-    {
-      id: 2,
-      title: 'UI/UX Design',
-      teacher: 'Marcus Johnson',
-      category: 'Design',
-      status: 'pending',
-      createdDate: '2023-11-15',
-      studentsCount: 0
-    }
-  ];
-
-  const mockReports = [
-    {
-      id: 1,
-      type: 'inappropriate_content',
-      reporter: 'John Doe',
-      reported: 'Jane Smith',
-      reason: 'Inappropriate skill description',
-      status: 'pending',
-      date: '2023-11-20'
-    },
-    {
-      id: 2,
-      type: 'harassment',
-      reporter: 'Alice Brown',
-      reported: 'Bob Wilson',
-      reason: 'Harassment in messages',
-      status: 'resolved',
-      date: '2023-11-18'
-    }
-  ];
 
   useEffect(() => {
     const fetchAdminData = async () => {

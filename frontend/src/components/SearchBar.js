@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Mock data for suggestions - moved outside component to prevent recreation
+const mockSuggestions = [
+  { id: 1, type: 'skill', title: 'React Development', category: 'Web Development', matches: 245 },
+  { id: 2, type: 'skill', title: 'Python Programming', category: 'Programming', matches: 189 },
+  { id: 3, type: 'skill', title: 'UI/UX Design', category: 'Design', matches: 156 },
+  { id: 4, type: 'skill', title: 'Digital Marketing', category: 'Marketing', matches: 134 },
+  { id: 5, type: 'skill', title: 'Data Science', category: 'Analytics', matches: 98 },
+  { id: 6, type: 'category', title: 'Web Development', matches: 567 },
+  { id: 7, type: 'category', title: 'Design', matches: 423 },
+  { id: 8, type: 'teacher', title: 'Sarah Chen', specialty: 'React & Frontend', rating: 4.9 },
+  { id: 9, type: 'teacher', title: 'Marcus Johnson', specialty: 'Python & Data Science', rating: 4.8 }
+];
+
 const SearchBar = ({
   placeholder = 'Search skills, categories, or teachers...',
   onSearch,
@@ -30,19 +43,7 @@ const SearchBar = ({
   const debounceRef = useRef(null);
   const navigate = useNavigate();
 
-  // Mock data for suggestions - replace with actual API calls
-  const mockSuggestions = [
-    { id: 1, type: 'skill', title: 'React Development', category: 'Web Development', matches: 245 },
-    { id: 2, type: 'skill', title: 'Python Programming', category: 'Programming', matches: 189 },
-    { id: 3, type: 'skill', title: 'UI/UX Design', category: 'Design', matches: 156 },
-    { id: 4, type: 'skill', title: 'Digital Marketing', category: 'Marketing', matches: 134 },
-    { id: 5, type: 'skill', title: 'Data Science', category: 'Analytics', matches: 98 },
-    { id: 6, type: 'category', title: 'Web Development', matches: 567 },
-    { id: 7, type: 'category', title: 'Design', matches: 423 },
-    { id: 8, type: 'category', title: 'Programming', matches: 389 },
-    { id: 9, type: 'teacher', title: 'Sarah Chen', specialty: 'Full Stack Development', rating: 4.9 },
-    { id: 10, type: 'teacher', title: 'Marcus Johnson', specialty: 'UI/UX Design', rating: 4.8 },
-  ];
+
 
   // Fetch suggestions based on query
   const fetchSuggestions = useCallback(async (searchQuery) => {
@@ -268,6 +269,7 @@ const SearchBar = ({
           autoComplete="off"
           role="combobox"
           aria-expanded={showSuggestionsList}
+          aria-controls="search-suggestions-list"
           aria-haspopup="listbox"
           aria-autocomplete="list"
         />
@@ -304,6 +306,7 @@ const SearchBar = ({
       {showSuggestionsList && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
+          id="search-suggestions-list"
           className="search-suggestions"
           role="listbox"
         >
