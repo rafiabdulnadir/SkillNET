@@ -111,7 +111,7 @@ const Navbar = () => {
               🔄
             </motion.span>
             <span className="logo-text text-blue-600 dark:text-blue-400">
-              SkillSwap
+              SkillNet
             </span>
           </Link>
         </motion.div>
