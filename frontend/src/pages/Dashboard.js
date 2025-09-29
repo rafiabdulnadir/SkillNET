@@ -3,13 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const Dashboard = () => {
-  const { user } = useAuth();
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Mock dashboard data
+// Mock dashboard data - moved outside component to prevent recreation
   const mockDashboardData = {
     stats: {
       skillsShared: 8,
@@ -129,6 +123,12 @@ const Dashboard = () => {
       }
     ]
   };
+
+const Dashboard = () => {
+  const { user } = useAuth();
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch dashboard data
   useEffect(() => {

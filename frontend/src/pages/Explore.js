@@ -2,19 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import SkillCard from '../components/SkillCard';
-import Pagination from '../components/Pagination';
-import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
+import { SkillCardSkeleton } from '../components/LoadingSpinner';
 
-const Explore = () => {
-  const [trendingSkills, setTrendingSkills] = useState([]);
-  const [newSkills, setNewSkills] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [featuredTeachers, setFeaturedTeachers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('trending');
-
-  // Mock data
+// Mock data
   const mockTrendingSkills = [
     {
       id: 1,
@@ -145,6 +135,15 @@ const Explore = () => {
       bio: 'Creating beautiful and intuitive user experiences for 7+ years.'
     }
   ];
+
+const Explore = () => {
+  const [trendingSkills, setTrendingSkills] = useState([]);
+  const [newSkills, setNewSkills] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [featuredTeachers, setFeaturedTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState('trending');
 
   // Fetch explore data
   useEffect(() => {

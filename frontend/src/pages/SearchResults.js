@@ -6,39 +6,7 @@ import SkillFilter from '../components/SkillFilter';
 import Pagination, { usePagination } from '../components/Pagination';
 import LoadingSpinner, { SkillCardSkeleton } from '../components/LoadingSpinner';
 
-const SearchResults = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  
-  const [skills, setSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({
-    search: '',
-    category: '',
-    skillLevel: '',
-    availabilityType: '',
-    location: '',
-    priceRange: '',
-    rating: ''
-  });
-  const [totalResults, setTotalResults] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Pagination hook
-  const {
-    currentPage,
-    totalPages,
-    goToPage,
-    changePageSize,
-    pageSize
-  } = usePagination({
-    totalItems: totalResults,
-    itemsPerPage: 12,
-    initialPage: 1
-  });
-
-  // Mock search results
+// Mock search results
   const mockSkills = [
     {
       id: 1,
@@ -138,6 +106,37 @@ const SearchResults = () => {
     }
   ];
 
+const SearchResults = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({
+    search: '',
+    category: '',
+    skillLevel: '',
+    availabilityType: '',
+    location: '',
+    priceRange: '',
+    rating: ''
+  });
+  const [totalResults, setTotalResults] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Pagination hook
+  const {
+    currentPage,
+    totalPages,
+    goToPage,
+    pageSize
+  } = usePagination({
+    totalItems: totalResults,
+    itemsPerPage: 12,
+    initialPage: 1
+  });
+
   // Parse URL parameters
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -160,7 +159,7 @@ const SearchResults = () => {
     });
 
     goToPage(page);
-  }, [location.search]);
+  }, [location.search, goToPage]);
 
   // Fetch search results
   useEffect(() => {

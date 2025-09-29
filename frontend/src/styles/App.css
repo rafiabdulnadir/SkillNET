@@ -231,17 +231,19 @@ body {
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  background: var(--navbar-background);
-  border-bottom: 1px solid var(--navbar-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--color-navbar);
+  border-bottom: 1px solid var(--color-navbar-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition: var(--transition-all);
   height: var(--navbar-height);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .navbar.scrolled {
   box-shadow: var(--navbar-shadow);
-  background: rgba(var(--color-surface), 0.95);
+  background: var(--color-navbar);
+  border-bottom-color: var(--color-border);
 }
 
 .nav-container {

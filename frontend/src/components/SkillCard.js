@@ -2,13 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { cardHover, buttonHover, iconHover } from '../utils/animations';
 
 const SkillCard = ({ skill }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { isDark } = useTheme();
 
   const handleContactUser = () => {
     if (!user) {

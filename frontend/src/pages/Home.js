@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
 import HeroSection from '../components/HeroSection';
@@ -30,11 +30,7 @@ const Home = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
 
-  useEffect(() => {
-    fetchSkills(true);
-  }, [filters]);
-
-  const fetchSkills = async (resetPagination = false) => {
+  const fetchSkills = useCallback(async (resetPagination = false) => {
     try {
       if (resetPagination) {
         setLoading(true);
@@ -218,7 +214,11 @@ const Home = () => {
       setLoading(false);
       setLoadingMore(false);
     }
-  };
+  }, [filters, pagination.page, pagination.pageSize]);
+
+  useEffect(() => {
+    fetchSkills(true);
+  }, [fetchSkills]);
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);

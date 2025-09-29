@@ -1,10 +1,14 @@
-// Navbar component - Updated version
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme, ThemeToggle } from "../contexts/ThemeContext";
+
 import "../styles/components.css";
+
+
+
 
 import {
   navSlide,
